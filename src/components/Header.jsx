@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { useAuth } from '../contexts/AuthContext';
 import styles from '../css/modules/Header.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Header() {
+  const { isLoggedIn, logout } = useAuth();
+
   return (
     <Navbar expand="lg" className={styles.header}>
       <Container>
@@ -21,6 +23,17 @@ function Header() {
               Blog
             </Nav.Link>
           </Nav>
+          {isLoggedIn ? (
+            <Button variant="outline-light" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <Nav>
+              <Nav.Link as={Link} to="/login">
+                Login
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
